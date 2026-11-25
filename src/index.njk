@@ -1,0 +1,66 @@
+---
+layout: layouts/base.njk
+seoTitle: "avroy tech | Home - Navigate Tech Regs"
+description: "We focus on highly-regulated sectors, using our expertise to understand your business and our passion to help you move it forward  Licensing | Compliance | Corp & DAO law | Financing, Tax, Investigation | Gen. Counsel as a Service | Escrow"
+bodyClass: home
+services:
+  - title: Licence acquisition support
+    text: "We can join or help your team if you are looking to get a license for your activities: virtual asset service provider, payment institution,…"
+  - title: Compliance support
+    text: "We can help or join your team to advise or supplement your compliance needs: AML/CTF, GDRP, reporting obligations, Crypto Ads, …"
+  - title: Corporate & DAO law support
+    text: We will assist you with all your questions related to corporate law and the options that exists for your DAOs
+  - title: Financing & tax suport
+    text: From fundraising to tax obligations, we support you in running the money side of your enterprise.
+  - title: Public relations consulting
+    text: We help you get your message across and your opinions be heard by policymakers
+  - title: Legal officer as mediator
+    text: We act as mediators, arbiters, or oracles between two parties through multi-signature wallets.
+  - title: And more
+    html: 'Be sure to check our <a href="/services/">services page to see all we can do with you</a>'
+---
+<section class="hero" style="background-image: url('/assets/img/pages/home-hero.jpg')">
+  <div class="wrap">
+    <h1>Navigate Tech Regs</h1>
+    <p>We focus on highly-regulated sectors, using our expertise to understand your business and our passion to help you move it forward.</p>
+    <p><a class="button" href="/contact/">Let's talk</a></p>
+  </div>
+</section>
+
+<section class="section light">
+  <div class="wrap">
+    <h1 class="section-title">Our Services</h1>
+    <ul class="cards">
+      {%- for s in services %}
+      <li class="card">
+        <h4>{{ s.title }}</h4>
+        <p>{% if s.html %}{{ s.html | safe }}{% else %}{{ s.text }}{% endif %}</p>
+      </li>
+      {%- endfor %}
+    </ul>
+    <p class="center"><a class="button" href="/services/">All Services</a></p>
+  </div>
+</section>
+
+<section class="section bright">
+  <div class="wrap statements">
+    <h3>The best solutions come from putting together diverse skill-sets to create game-changing solutions.</h3>
+    <h3>We are here to help you get there, not just present you with options and send you on your way.</h3>
+    <h3>We focus on highly-regulated tech sectors, using our expertise to understand your business and our passion to help you move it forward.</h3>
+    <h3>Like you, we think tech can change the world.</h3>
+  </div>
+</section>
+
+<section class="section light">
+  <div class="wrap two-cols">
+    <div>
+      <h1>Contact Us</h1>
+      <p>Whether you have a precise idea of what you need or want to know your options, leave us a message and we’ll get back to you shortly.</p>
+      <p>You can also email us at <a href="mailto:hello@avroy.tech?subject=I%20would%20like%20to%20get%20in%20touch">hello@avroy.tech</a></p>
+    </div>
+    <div>
+      {%- set formId = "form-home" %}{% set withPhone = true %}{% set subject = "avroy.tech - Contact (home page)" %}
+      {% include "partials/form.njk" %}
+    </div>
+  </div>
+</section>

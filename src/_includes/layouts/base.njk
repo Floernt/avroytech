@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="{{ site.lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%- set pageTitle = seoTitle or ((title ~ " — " ~ site.title) if title else site.title) %}
+  <title>{{ pageTitle }}</title>
+  {%- if description %}
+  <meta name="description" content="{{ description }}">
+  {%- endif %}
+  <link rel="canonical" href="{{ page.url | absoluteUrl(site.url) }}">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <meta property="og:site_name" content="{{ site.title }}">
+  <meta property="og:title" content="{{ title or site.title }}">
+  <meta property="og:url" content="{{ page.url | absoluteUrl(site.url) }}">
+  <meta property="og:type" content="{{ 'article' if layout == 'layouts/post.njk' else 'website' }}">
+  {%- if description %}
+  <meta property="og:description" content="{{ description }}">
+  {%- endif %}
+  <meta property="og:image" content="{{ (image or '/assets/img/pages/logo.jpg') | absoluteUrl(site.url) }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }} — Blog" href="/blog/feed.xml">
+  <link rel="preload" href="/assets/fonts/poppins-300.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body class="{{ bodyClass }}">
+  <a class="skip-link" href="#page">Skip to Content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="logo" href="/"><img src="/assets/img/pages/logo.jpg" alt="{{ site.title }}" width="236" height="61"></a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Open Menu">
+      <label for="nav-toggle" class="nav-burger" aria-hidden="true"><span></span><span></span></label>
+      <nav class="site-nav" aria-label="Main">
+        {%- for item in site.nav %}
+        <a href="{{ item.url }}"{% if page.url.startsWith(item.url) %} aria-current="page"{% endif %}>{{ item.label }}</a>
+        {%- endfor %}
+      </nav>
+    </div>
+  </header>
+
+  <main id="page">
+{{ content | safe }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p>Avroy Tech - Navigate Tech Regs</p>
+      <p><a href="{{ site.termsUrl }}">Terms, Privacy &amp; Cookie Policy</a></p>
+      <p><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+      {% include "partials/social.njk" %}
+    </div>
+  </footer>
+</body>
+</html>

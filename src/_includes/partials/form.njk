@@ -1,0 +1,40 @@
+{#
+  Formulaire de contact. Squarespace traitait les envois lui-même ; un site statique
+  a besoin d'un service tiers. Tant que site.formEndpoint est vide, le formulaire
+  ouvre le logiciel de messagerie du visiteur avec un courriel prérempli vers site.email.
+  Paramètres : formId (identifiant unique), withPhone (booléen), subject (objet du courriel).
+#}
+<form class="contact-form" id="{{ formId }}"
+  {%- if site.formEndpoint %} action="{{ site.formEndpoint }}" method="post"
+  {%- else %} action="mailto:{{ site.email }}?subject={{ subject | urlencode }}" method="post" enctype="text/plain" data-mailto="{{ site.email }}" data-subject="{{ subject }}"
+  {%- endif %}>
+  <input type="hidden" name="_subject" value="{{ subject }}">
+  <fieldset class="name-fields">
+    <legend>Name</legend>
+    <label>First Name<input type="text" name="first_name" autocomplete="given-name"></label>
+    <label>Last Name<input type="text" name="last_name" autocomplete="family-name"></label>
+  </fieldset>
+  <label>Email <span class="required">(required)</span><input type="email" name="email" autocomplete="email" required></label>
+  {%- if withPhone %}
+  <label>Phone<input type="tel" name="phone" autocomplete="tel"></label>
+  {%- endif %}
+  <label>Message<textarea name="message" rows="6"></textarea></label>
+  <button class="button" type="submit">Submit</button>
+</form>
+{%- if not site.formEndpoint %}
+<script>
+  (function () {
+    var form = document.getElementById("{{ formId }}");
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var f = form.elements, lines = [];
+      ["first_name", "last_name", "email", "phone", "message"].forEach(function (n) {
+        if (f[n] && f[n].value) lines.push(f[n].labels[0].firstChild.textContent.trim() + ": " + f[n].value);
+      });
+      window.location.href = "mailto:" + form.dataset.mailto +
+        "?subject=" + encodeURIComponent(form.dataset.subject) +
+        "&body=" + encodeURIComponent(lines.join("\n"));
+    });
+  })();
+</script>
+{%- endif %}
