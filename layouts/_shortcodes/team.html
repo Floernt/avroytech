@@ -1,0 +1,11 @@
+{{- /* Fondateurs de la page About, définis dans le front matter (team). */ -}}
+<ul class="team">
+  {{- range .Page.Params.team }}
+  <li>
+    <img src="{{ .photo }}" alt="{{ .alt }}" width="750" height="1125" loading="lazy">
+    <h2>{{ .name }}</h2>
+    <p class="meta">FOUNDER</p>
+    <p><a href="{{ .link }}">{{ .linkText }}</a></p>
+  </li>
+  {{- end }}
+</ul>

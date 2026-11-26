@@ -1,0 +1,15 @@
+{{ define "main" }}
+<article class="post wrap narrow">
+  <div class="post-header">
+    <p class="meta">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+      {{- with .Params.author }} · {{ . }}{{ end }}
+    </p>
+    <h1>{{ .Title }}</h1>
+  </div>
+  <div class="post-body">
+{{ .Content }}
+  </div>
+  <p class="back"><a href="/blog/">← Back to the blog</a></p>
+</article>
+{{ end }}

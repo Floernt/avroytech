@@ -1,0 +1,2 @@
+{{- /* Usage : {{< form id="form-contact" subject="avroy.tech - Contact" phone="false" >}} */ -}}
+{{ partial "form.html" (dict "id" (.Get "id") "subject" (.Get "subject") "phone" (eq (.Get "phone") "true")) }}

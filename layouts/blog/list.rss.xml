@@ -1,0 +1,20 @@
+{{- printf "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" | safeHTML }}
+<rss version="2.0">
+  <channel>
+    <title>{{ site.Title }} — Blog</title>
+    <link>{{ .Permalink }}</link>
+    <description>{{ .Description }}</description>
+    <language>{{ site.LanguageCode }}</language>
+    {{- range .Pages.ByDate.Reverse }}
+    <item>
+      <title>{{ .Title }}</title>
+      <link>{{ .Permalink }}</link>
+      <guid>{{ .Permalink }}</guid>
+      <pubDate>{{ .Date.UTC.Format "Mon, 02 Jan 2006 15:04:05 GMT" }}</pubDate>
+      {{- with .Description }}
+      <description>{{ . }}</description>
+      {{- end }}
+    </item>
+    {{- end }}
+  </channel>
+</rss>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="{{ site.LanguageCode }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {{- $pageTitle := cond (eq .Kind "404") "Page Not Found" .Title }}
+  {{- $title := site.Title }}
+  {{- with .Params.seoTitle }}{{ $title = . }}{{ else }}{{ if and (not .IsHome) $pageTitle }}{{ $title = printf "%s — %s" $pageTitle site.Title }}{{ end }}{{ end }}
+  <title>{{ $title }}</title>
+  {{- with .Description }}
+  <meta name="description" content="{{ . }}">
+  {{- end }}
+  <link rel="canonical" href="{{ .Permalink }}">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+  <meta property="og:site_name" content="{{ site.Title }}">
+  <meta property="og:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ $pageTitle }}{{ end }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:type" content="{{ if and .IsPage (eq .Section "blog") }}article{{ else }}website{{ end }}">
+  {{- with .Description }}
+  <meta property="og:description" content="{{ . }}">
+  {{- end }}
+  <meta property="og:image" content="{{ .Params.image | default "/assets/img/pages/logo.jpg" | absURL }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.Title }} — Blog" href="/blog/feed.xml">
+  <link rel="preload" href="/assets/fonts/poppins-300.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body class="{{ .Params.bodyClass }}">
+  <a class="skip-link" href="#page">Skip to Content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="logo" href="/"><img src="/assets/img/pages/logo.jpg" alt="{{ site.Title }}" width="236" height="61"></a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Open Menu">
+      <label for="nav-toggle" class="nav-burger" aria-hidden="true"><span></span><span></span></label>
+      <nav class="site-nav" aria-label="Main">
+        {{- $current := .RelPermalink }}
+        {{- range site.Menus.main }}
+        <a href="{{ .URL }}"{{ if hasPrefix $current .URL }} aria-current="page"{{ end }}>{{ .Name }}</a>
+        {{- end }}
+      </nav>
+    </div>
+  </header>
+
+  <main id="page">
+{{ block "main" . }}{{ end }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p>Avroy Tech - Navigate Tech Regs</p>
+      <p><a href="{{ site.Params.termsUrl }}">Terms, Privacy &amp; Cookie Policy</a></p>
+      <p><a href="mailto:{{ site.Params.email }}">{{ site.Params.email }}</a></p>
+      {{ partial "social.html" . }}
+    </div>
+  </footer>
+</body>
+</html>

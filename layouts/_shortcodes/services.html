@@ -1,0 +1,9 @@
+{{- /* Cartes de services de l'accueil, définies dans le front matter (services). */ -}}
+<ul class="cards">
+  {{- range .Page.Params.services }}
+  <li class="card">
+    <h4>{{ .title }}</h4>
+    <p>{{ with .html }}{{ . | safeHTML }}{{ else }}{{ .text }}{{ end }}</p>
+  </li>
+  {{- end }}
+</ul>

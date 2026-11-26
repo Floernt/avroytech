@@ -1,0 +1,17 @@
+{{ define "main" }}
+<section class="section white">
+  <div class="wrap">
+    <ul class="blog-grid">
+      {{- range .Pages.ByDate.Reverse }}
+      <li>
+        <a class="thumb" href="{{ .RelPermalink }}">
+          {{- with .Params.image }}<img src="{{ . }}" alt="" loading="lazy">{{ end -}}
+        </a>
+        <p class="meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 2, 2006" }}</time></p>
+        <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+      </li>
+      {{- end }}
+    </ul>
+  </div>
+</section>
+{{ end }}
