@@ -1,0 +1,43 @@
+# Déploiement GitHub Pages du site avroy.tech (repo GitHub Floernt/avroytech).
+# Ce dossier site/ devient la racine du repo GitHub (voir migration/MIGRATION.md, point 5.1) :
+# le workflow ne s'exécute donc que là-bas, pas sur le repo de projet.
+name: Deploy site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Même version de Hugo que celle utilisée pour construire et vérifier le site.
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.148.2"
+          extended: true
+      - run: hugo --gc --minify
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
